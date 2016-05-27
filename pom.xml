@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.renjin.cran</groupId>
+  <artifactId>digest</artifactId>
+  <version>0.6.9</version>
+  <properties>
+    <renjin.version>0.9.0-SNAPSHOT</renjin.version>
+  </properties>
+  <description>
+    Implementation of a function 'digest()' for the creation of hash digests of arbitrary R objects (using the md5, sha-1, sha-256, crc32, xxhash and murmurhash algorithms) permitting easy comparison of R language objects, as well as a function 'hmac()' to create hash-based message authentication code. . The md5 algorithm by Ron Rivest is specified in RFC 1321, the sha-1 and sha-256 algorithms are specified in FIPS-180-1 and FIPS-180-2, and the crc32 algorithm is described in ftp://ftp.rocksoft.com/cliens/rocksoft/papers/crc_v3.txt. . For md5, sha-1, sha-256 and aes, this package uses small standalone implementations that were provided by Christophe Devine. For crc32, code from the zlib library is used. For sha-512, an implementation by Aaron D. Gifford is used. For xxhash, the implementation by Yann Collet is used. For murmurhash, an implementation by Shane Day is used. . Please note that this package is not meant to be deployed for cryptographic purposes for which more comprehensive (and widely tested) libraries such as OpenSSL should be used.
+  </description>
+  <url>http://dirk.eddelbuettel.com/code/digest.html</url>
+  <licenses>
+    <license>
+      <name>GPL-2</name>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <name>Dirk Eddelbuettel</name>
+      <email>edd@debian.org</email>
+    </developer>
+    <developer>
+      <name>Jarek Tuszynski</name>
+    </developer>
+    <developer>
+      <name>Henrik Bengtsson</name>
+    </developer>
+    <developer>
+      <name>Simon Urbanek</name>
+    </developer>
+    <developer>
+      <name>Mario Frasca</name>
+    </developer>
+    <developer>
+      <name>Bryan Lewis</name>
+    </developer>
+    <developer>
+      <name>Murray Stokely</name>
+    </developer>
+    <developer>
+      <name>Hannes Muehleisen</name>
+    </developer>
+    <developer>
+      <name>Duncan Murdoch</name>
+    </developer>
+    <developer>
+      <name>Jim Hester</name>
+    </developer>
+    <developer>
+      <name>Wush Wu and Thierry Onkelinx.</name>
+    </developer>
+  </developers>
+  <dependencies>
+    <dependency>
+      <groupId>org.renjin</groupId>
+      <artifactId>renjin-core</artifactId>
+      <version>${renjin.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.renjin</groupId>
+      <artifactId>stats</artifactId>
+      <version>${renjin.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.renjin</groupId>
+      <artifactId>hamcrest</artifactId>
+      <version>${renjin.version}</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+  <repositories>
+    <repository>
+      <id>bedatadriven-public</id>
+      <url>
+        http://nexus.bedatadriven.com/content/groups/public/
+      </url>
+    </repository>
+  </repositories>
+  <pluginRepositories>
+    <pluginRepository>
+      <id>bedatadriven-public</id>
+      <url>
+        http://nexus.bedatadriven.com/content/groups/public/
+      </url>
+    </pluginRepository>
+  </pluginRepositories>
+
+  <distributionManagement>
+    <repository>
+      <id>renjin-packages</id>
+      <name>Renjin CI Repository</name>
+      <url>http://nexus.bedatadriven.com/content/repositories/renjin-packages</url>
+    </repository>
+  </distributionManagement>
+
+  <build>
+    <sourceDirectory>${basedir}/java</sourceDirectory>
+    <plugins>
+      <plugin>
+        <groupId>org.renjin</groupId>
+        <artifactId>renjin-maven-plugin</artifactId>
+        <version>${renjin.version}</version>
+        <executions>
+          <execution>
+            <id>build</id>
+            <goals>
+              <goal>namespace-compile</goal>
+            </goals>
+            <phase>process-classes</phase>
+            <configuration>
+              <sourceDirectory>R</sourceDirectory>
+            </configuration>
+          </execution>
+          <execution>
+            <id>test</id>
+            <goals>
+              <goal>test</goal>
+            </goals>
+            <phase>test</phase>
+            <configuration>
+              <testSourceDirectory>tests</testSourceDirectory>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>1.7</source>
+          <target>1.7</target>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>

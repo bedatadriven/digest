@@ -31,11 +31,10 @@ for (i in seq(along=md5Input)) {
 ## md5 raw output test
 for (i in seq(along=md5Input)) {
     md5 <- digest(md5Input[i], serialize=FALSE, raw=TRUE)
-    md5 <- gsub(" ","",capture.output(cat(md5)))
+    md5 <- paste(as.character(md5), collapse="")
     stopifnot(identical(md5, md5Output[i]))
     cat(md5, "\n")
 }
-
 sha1Input <-
     c("abc",
       "abcdbcdecdefdefgefghfghighijhijkijkljklmklmnlmnomnopnopq",
@@ -55,7 +54,7 @@ for (i in seq(along=sha1Input)) {
 for (i in seq(along=sha1Input)) {
     sha1 <- digest(sha1Input[i], algo="sha1", serialize=FALSE, raw=TRUE)
     print(sha1)
-    sha1 <- gsub(" ","",capture.output(cat(sha1)))
+    sha1 <- paste(as.character(sha1), collapse="")
     print(sha1)
     print(sha1Output[i])
     stopifnot(identical(sha1, sha1Output[i]))
@@ -83,7 +82,7 @@ for (i in seq(along=sha512Input)) {
     sha512 <- digest(sha512Input[i], algo="sha512", serialize=FALSE, raw=TRUE)
     print(sha512)
 
-    sha512 <- gsub(" ","",capture.output(cat(sha512)))
+    sha512 <- paste(as.character(sha512), collapse="")
     print(sha512)
     print(sha512Output[i])
     stopifnot(identical(sha512, sha512Output[i]))

@@ -49,23 +49,8 @@ digest <- function(object, algo=c("md5", "sha1", "crc32", "sha256", "sha512",
     }
 
     if (serialize && !file) {
-        object <- serialize(object, connection=NULL, ascii=ascii)
-        ## we support raw vectors, so no mangling of 'object' is necessary
-        ## regardless of R version
-        ## skip="auto" - skips the serialization header [SU]
-        if (any(!is.na(pmatch(skip,"auto")))) {
-            if (ascii) {
-                ## HB 14 Mar 2007:
-                ## Exclude serialization header (non-data dependent bytes but R
-                ## version specific).  In ASCII, the header consists of for rows
-                ## ending with a newline ('\n').  We need to skip these.
-                ## The end of 4th row is *typically* within the first 18 bytes
-                skip <- which(object[1:30] == as.raw(10))[4]
-            } else {
-                skip <- 14
-            }
-            ## Was: skip <- if (ascii) 18 else 14
-        }
+        return(Digest$hashSerializedSexp(object, algo, ascii, raw, skip))
+      
     } else if (!is.character(object) && !inherits(object,"raw")) {
         return(.errorhandler(paste("Argument object must be of type character",
                                       "or raw vector if serialize is FALSE"), mode=errormode))
@@ -73,20 +58,8 @@ digest <- function(object, algo=c("md5", "sha1", "crc32", "sha256", "sha512",
     if (file && !is.character(object))
         return(.errorhandler("file=TRUE can only be used with a character object",
                              mode=errormode))
-    ## HB 14 Mar 2007:  null op, only turned to char if alreadt char
-    ##if (!inherits(object,"raw"))
-    ##  object <- as.character(object)
-    algoint <- switch(algo,
-                      md5=1,
-                      sha1=2,
-                      crc32=3,
-                      sha256=4,
-                      sha512=5,
-                      xxhash32=6,
-                      xxhash64=7,
-                      murmur32=8)
+  
     if (file) {
-        algoint <- algoint+100
         object <- path.expand(object)
         if (!file.exists(object)) {
             return(.errorhandler("The file does not exist: ", object, mode=errormode))
@@ -99,17 +72,9 @@ digest <- function(object, algo=c("md5", "sha1", "crc32", "sha256", "sha512",
             return(.errorhandler("The specified file is not readable: ",
                                  object, mode=errormode))
         }
+        return(Digest$hashFile(object, algo, raw, skip));
+    
+    } else {
+        return(Digest$hashVector(object, algo, raw, skip))
     }
-    ## if skip is auto (or any other text for that matter), we just turn it
-    ## into 0 because auto should have been converted into a number earlier
-    ## if it was valid [SU]
-    if (is.character(skip)) skip <- 0
-    val <- .Call(digest_impl,
-                 object,
-                 as.integer(algoint),
-                 as.integer(length),
-                 as.integer(skip),
-                 as.integer(raw),
-                 as.integer(seed))
-    return(val)
 }

@@ -1,6 +1,5 @@
 ## package has a dynamic library
-useDynLib(digest, digest_impl=digest, AESinit, AESencryptECB, AESdecryptECB)
-
+importClass(org.renjin.cran.digest.Digest)
 ## and exported functions
 export(AES,
        digest,
