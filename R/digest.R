@@ -49,7 +49,10 @@ digest <- function(object, algo=c("md5", "sha1", "crc32", "sha256", "sha512",
     }
 
     if (serialize && !file) {
-        return(Digest$hashSerializedSexp(object, algo, ascii, raw, skip))
+        if(ascii) {
+            stop("serialize=TRUE and ascii=TRUE is not implemented.")
+        }
+        return(Digest$hashSerializedSexp(object, algo, raw, skip))
       
     } else if (!is.character(object) && !inherits(object,"raw")) {
         return(.errorhandler(paste("Argument object must be of type character",

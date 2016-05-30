@@ -68,14 +68,10 @@ public class Digest {
     return buildSexpResult(hashCode, leaveRaw);
   }
 
-
-
-  public static SEXP hashFile(@Current Context context, IntVector connectionHandle, String algorithm, boolean ascii,
+  
+  public static SEXP hashFile(@Current Context context, IntVector connectionHandle, String algorithm,
                               boolean leaveRaw, int skip) throws IOException {
 
-    if(ascii) {
-      throw new EvalException("ASCII mode not supported");
-    }
     Hasher hasher = forAlgorithm(algorithm).newHasher();
 
     Connection connection = context.getSession().getConnectionTable().getConnection(connectionHandle);
