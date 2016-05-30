@@ -1,0 +1,6 @@
+*.o
+.idea
+*.iml
+target
+*~
+*.so
