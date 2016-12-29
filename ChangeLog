@@ -1,3 +1,118 @@
+2016-12-08  Dirk Eddelbuettel  <edd@debian.org>
+
+	* NAMESPACE: Register (and exported) makeRaw S3 methods
+
+	* man/makeRaw.Rd: New manual page
+
+	* tests/hmacTest.R: Direct call to makeRaw()
+	* tests/hmacTest.Rout.save: Ditto
+
+	* src/digest.c: Additional #nocov tags
+	* src/xxhash.c: Ditto
+
+2016-12-07  Dirk Eddelbuettel  <edd@debian.org>
+
+	* DESCRIPTION (Version, Date): Rolled minor version
+
+	* README.md: Use shields.io badge for codecov
+
+	* R/digest.R: Additional #nocov tags
+	* src/sha2.c: Ditto
+	* src/raes.c: Ditto
+
+	* tests/hmacTest.R: Additional tests
+	* tests/hmacTest.Rout.save: Ditto
+
+2016-11-30  Dirk Eddelbuettel  <edd@debian.org>
+
+	* .travis.yml (before_install): Activate PPA as we (currently)
+	need an updated version of (r-cran)-covr to run coverage
+	* tests/load-unload.R: Comment-out for now as it upsets coverage
+
+	* tests/digestTest.R: Test two more algorithms
+	* tests/digestTest.Rout.save: Updated reference output
+
+	* R/digest.R: Added #nocov tags
+	* R/zzz.R (.onUnload): Ditto
+	* src/crc32.c: Ditto
+	* src/pmurhash.c: Ditto
+	* src/raes.c: Ditto
+	* src/sha2.c: Ditto
+	* src/xxhash.c: Ditto
+
+2016-11-26  Dirk Eddelbuettel  <edd@debian.org>
+
+	* .travis.yml (after_success): Integrated Jim Hester's suggestion of
+	activating code coverage sent many moons ago (in PR #12)
+	* .codecov.yml (comment): Added
+	* .Rbuildignore: Exclude .codecov.yml
+	* README.md: Added code coverage badge
+
+2016-10-16  Dirk Eddelbuettel  <edd@debian.org>
+
+	* R/digest.R (digest): Support 'nosharing' option of base::serialize
+	as suggested by Radford Neal whose pqR uses this
+
+2016-08-02  Dirk Eddelbuettel  <edd@debian.org>
+
+	* DESCRIPTION (License): Now GPL (>= 2), cf issue 36 on GH
+
+	* README.md: Updated badge accordingly
+
+2016-08-02  Dirk Eddelbuettel  <edd@debian.org>
+
+	* DESCRIPTION (Version): Release 0.6.10
+
+	* DESCRIPTION (Description): Shortened to one paragraph
+	* DESCRIPTION (BugReports): URL to GH issues added
+
+	* .travis.yml: Rewritten for run.sh from forked r-travis
+
+2016-07-12  Henrik Bengtsson  <hb@aroma-project.org>
+
+	* src/digest.c: Correct bug with skip and file parameter interaction
+	* tests/digestTest.R: Test code
+	* tests/digestTest.Rout.save: Test reference output
+
+	* R/zzz.R: Allow for unloading of shared library
+	* tests/load-unload.R: Test code
+
+	* DESCRIPTION: Rolled minor Version and Date
+
+2016-05-25 Thierry Onkelinx <thierry.onkelinx@inbo.be>
+
+	* R/sha1.R: Support for pairlist and name
+	* tests/sha1Test.R: Support for pairlist and name
+	* man/sha1.Rd: Support for pairlist, name, complex, array and Date
+	* NAMESPACE: Support for pairlist, name and array
+	* DESCRIPTION: bump version number and date
+
+2016-05-01  Viliam Simko  <viliam.simko@gmail.com>
+
+	* R/sha1.R: Support for complex, Date and array
+	* tests/sha1Test.R: Ditto
+	* NAMESPACE: Ditto
+
+2016-04-27  Dirk Eddelbuettel  <edd@debian.org>
+
+	* DESCRIPTION (Author): Add Qiang Kou to Authors
+	* README.md: Ditto
+
+2016-01-25  Dirk Eddelbuettel  <edd@debian.org>
+
+	* src/digest.c (digest): Use XLENGTH if R >= 3.0.0 (issue #29)
+
+2016-01-11 Thierry Onkelinx  <thierry.onkelinx@inbo.be>
+
+	* R/sha1.R: handle empty list and empty dataframe (#issue 27);
+	take the object class, digits and zapsmall into account (#PR 28)
+
+	* vignettes/sha1.Rmd: Small edits to reflect changes is sha1()
+
+2016-01-09 Michel Lang  <michellang@gmail.com>
+
+	* R/sha1.R: Add a length check to sha1(), use vapply()
+
 2016-01-07  Dirk Eddelbuettel  <edd@debian.org>
 
 	* DESCRIPTION (Version): Version 0.6.9
@@ -154,7 +269,11 @@
 	* R/digest.R: Applied pull request #3 by Jim Hester with support for
 	xxHash (https://code.google.com/p/xxhash/)
 	* src/digest.c: Ditto
+<<<<<<< HEAD
 	
+=======
+
+>>>>>>> 605483b9c0cb45ff18a18f864616e01f5479f391
 	* src/xxhash.c: xxHash implementation supplied as part of #3
 	* src/xxhash.h: xxHash implementation supplied as part of #3
 

@@ -1,7 +1,7 @@
 
 ##  digest -- hash digest functions for R
 ##
-##  Copyright (C) 2003 - 2015  Dirk Eddelbuettel <edd@debian.org>
+##  Copyright (C) 2003 - 2016  Dirk Eddelbuettel <edd@debian.org>
 ##
 ##  This file is part of digest.
 ##
@@ -24,7 +24,7 @@ digest <- function(object, algo=c("md5", "sha1", "crc32", "sha256", "sha512",
                    serialize=TRUE, file=FALSE, length=Inf,
                    skip="auto", ascii=FALSE, raw=FALSE, seed=0,
                    errormode=c("stop","warn","silent")) {
-    
+
     algo <- match.arg(algo)
     errormode <- match.arg(errormode)
 
@@ -32,13 +32,13 @@ digest <- function(object, algo=c("md5", "sha1", "crc32", "sha256", "sha512",
         if (mode == "stop") {
             stop(txt, obj, call.=FALSE)
         } else if (mode == "warn") {
-            warning(txt, obj, call.=FALSE)
-            return(invisible(NA))
+            warning(txt, obj, call.=FALSE)  # nocov
+            return(invisible(NA))           # nocov
         } else {
-            return(invisible(NULL))
+            return(invisible(NULL))         # nocov
         }
     }
-    
+
     if (is.infinite(length)) {
         length <- -1               # internally we use -1 for infinite len
     }
@@ -53,7 +53,7 @@ digest <- function(object, algo=c("md5", "sha1", "crc32", "sha256", "sha512",
             stop("serialize=TRUE and ascii=TRUE is not implemented.")
         }
         return(Digest$hashSerializedSexp(object, algo, raw, skip))
-      
+
     } else if (!is.character(object) && !inherits(object,"raw")) {
         return(.errorhandler(paste("Argument object must be of type character",
                                       "or raw vector if serialize is FALSE"), mode=errormode))
@@ -61,7 +61,7 @@ digest <- function(object, algo=c("md5", "sha1", "crc32", "sha256", "sha512",
     if (file && !is.character(object))
         return(.errorhandler("file=TRUE can only be used with a character object",
                              mode=errormode))
-  
+
     if (file) {
         object <- path.expand(object)
         if (!file.exists(object)) {
@@ -76,7 +76,7 @@ digest <- function(object, algo=c("md5", "sha1", "crc32", "sha256", "sha512",
                                  object, mode=errormode))
         }
         return(Digest$hashFile(object, algo, raw, skip));
-    
+
     } else {
         return(Digest$hashVector(object, algo, raw, skip))
     }

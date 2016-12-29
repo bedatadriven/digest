@@ -1,6 +1,11 @@
-*.o
 .idea
 *.iml
 target
 *~
-*.so
+.Rproj.user
+.Rhistory
+.RData
+src/*.o
+src/*.so
+src/*.dll
+inst/doc

@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.renjin.cran</groupId>
   <artifactId>digest</artifactId>
-  <version>0.6.9</version>
+  <version>0.6.10</version>
   <properties>
     <renjin.version>0.8.2306</renjin.version>
   </properties>
